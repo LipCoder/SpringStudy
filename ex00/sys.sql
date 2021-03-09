@@ -1,0 +1,19 @@
+--> 임시 계정 생성
+CREATE USER book_ex IDENTIFIED BY book_ex
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+
+--> 접속 권한 부여
+GRANT CONNECT, DBA TO BOOK_EX;
+--==>> Grant을(를) 성공했습니다.
+
+
+--> 8080 포트 변경
+--> 현재 사용하는 포트 확인
+SELECT DBMS_XDB.GETHTTPPORT() 
+FROM DUAL;
+--==>> 8080
+
+--> 9090으로 변경
+EXEC DBMS_XDB.SETHTTPPORT(9090);
