@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class BoardVO {
 	
-	private Long BNO;
-	private String TITLE;
-	private String CONTENT;
-	private String WRITER;
-	private Date REGDATE;
-	private Date UPDATEDATE;
+	private Long bno;
+	private String title;
+	private String content;
+	private String writer;
+	private Date regDate;
+	private Date updateDate;
 
 }
