@@ -10,3 +10,10 @@
 -Model 데이터 전달자
 -Controller의 리턴 타입
 -Controller의 Exception 처리 
+
+#기본적인 웹 게시물 관리 (ex02)
+- 스프링 mvc 프로젝트의 기본 구성
+- 영속/비즈니스 계층의 CRUD 구현 (VO, DAO)
+- 비즈니스 계층 (Service)
+- 프레젠테이션(웹) 계층의 CRUD 구현 (Controller)
+- 화면처리
