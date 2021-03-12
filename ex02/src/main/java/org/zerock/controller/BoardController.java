@@ -29,6 +29,10 @@ public class BoardController {
 		
 	}
 	
+	@GetMapping("/register")
+	public void register() {
+		
+	}
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		
@@ -44,7 +48,7 @@ public class BoardController {
 	
 	// @RequestParam을 사용해 bno값을 좀 더 명시적으로 처리한다.
 	// 파라미터 이름과 변수 이름을 기준으로 동작하기 때문에 이 어노테이션은 생략 가능
-	@GetMapping("/get")
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		
 		log.info("/get");
