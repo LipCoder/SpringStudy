@@ -23,7 +23,13 @@
 			} else if(operation === 'list') {
 				// move to list
 				formObj.attr("action", "/board/list").attr("method", "get");
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				
 				formObj.empty(); // 수정이 필요없기 때문에 form에 있는 모든 태그를 삭제한다.
+				// list로 이동하므로 페이징에 필요한 정보는 담는다.
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
 			}
 			formObj.submit();
 		});
@@ -47,6 +53,12 @@
 			<div class="panel-body">
 			
 			<form role="form" action="/board/modify" method="post">
+			
+				<!--  리스트 버튼 클릭시 해당 페이지가 아닌 
+		              1번 페이지로 가지는 것을 막기위함 -->
+				<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'/>
+               	<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'/>
+			
 				<div class="form-group">
 					<label>Bno</label> <input class="form-control" name='bno'
 						value='<c:out value="${board.bno }"/>' readonly="readonly">
@@ -77,6 +89,8 @@
 				<button type="submit" data-oper="list" class="btn btn-info"> 
 						List
 				</button>
+				
+
 			</form>
 				
 			</div>

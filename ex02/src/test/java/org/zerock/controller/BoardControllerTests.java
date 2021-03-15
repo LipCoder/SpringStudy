@@ -93,9 +93,6 @@ public class BoardControllerTests {
 		
 		log.info(resultPage);
 	}
-	*/
-	
-	
 	
 	@Test
 	public void testModify() throws Exception {
@@ -107,4 +104,18 @@ public class BoardControllerTests {
 		
 		log.info(resultPage);
 	}
+	*/
+	
+	
+	@Test
+	public void testListPaging() throws Exception {
+		
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/board/list")
+				.param("pagteNum", "2")
+				.param("amount", "50"))
+				.andReturn().getModelAndView().getModelMap());
+				
+	}
+	
 }

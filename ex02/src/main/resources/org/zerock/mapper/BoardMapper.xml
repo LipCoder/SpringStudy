@@ -10,6 +10,22 @@
 		]]>
 	</select>
 	
+	<!-- 페이징 처리 -->
+	<!-- CDATA 섹션은 부등호 처리(<,>)를 XML에서 사용하는 태그로
+	     인식하는 것을 막기위해서 사용한다. -->
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+		<![CDATA[
+		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
+		FROM 
+		(
+			SELECT /*+INDEX_DESC(TBL_BOARD PK_BOARD)*/
+			ROWNUM RN, BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
+			FROM TBL_BOARD
+			WHERE ROWNUM <= #{pageNum} * #{amount}
+		)
+		WHERE RN > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
 	
 	<!-- insert 처리 -->
 	<!-- 그냥 한번에 INSERT -->
@@ -52,5 +68,11 @@
 		UPDATEDATE = SYSDATE
 		WHERE BNO = #{bno}
 	</update>
+
+	
+	<!-- 총 개수 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM TBL_BOARD WHERE BNO > 0
+	</select>
 
 </mapper>

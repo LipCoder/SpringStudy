@@ -14,7 +14,7 @@
 			operForm.attr("action", "/board/modify").submit();
 		});
 		
-		$("button[data-oper]='list'").on("click", function(e) {
+		$("button[data-oper='list']").on("click", function(e) {
 			
 			// 수정을 하지 않고 리스트로 돌아가기 때문에
 			// modify에 필요한 bno를 담는 hidden input태그가 필요 없으므로 지운다.
@@ -71,7 +71,12 @@
 				</button>
 			
 				<form id='operForm' action="/board/modify" method="get">
-					<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }"/>'>
+					<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }"/>'/>
+					
+					<!--  리스트 버튼 클릭시 해당 페이지가 아닌 
+					      1번 페이지로 가지는 것을 막기위함 -->
+					<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'/>
+                	<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'/>
 				</form>
 				
 			</div>
