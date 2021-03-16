@@ -13,7 +13,32 @@
 	<!-- 페이징 처리 -->
 	<!-- CDATA 섹션은 부등호 처리(<,>)를 XML에서 사용하는 태그로
 	     인식하는 것을 막기위해서 사용한다. -->
+	
+	<!-- 검색기능으로 인한 추가 쿼리문 -->
+	<!-- sql 태그를 사용하여 재사용할 수 있음 -->     
+	<sql id="criteria">
+		<!-- 검색 기능 추가 -->
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							CONTENT LIKE '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							WRITER LIKE '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+		
 	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+		
 		<![CDATA[
 		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
 		FROM 
@@ -21,11 +46,19 @@
 			SELECT /*+INDEX_DESC(TBL_BOARD PK_BOARD)*/
 			ROWNUM RN, BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE
 			FROM TBL_BOARD
-			WHERE ROWNUM <= #{pageNum} * #{amount}
+			WHERE 
+		]]>
+		
+		<include refid="criteria"></include>
+		
+		<![CDATA[
+			ROWNUM <= #{pageNum} * #{amount}
 		)
 		WHERE RN > (#{pageNum} - 1) * #{amount}
 		]]>
-	</select>
+		
+	</select> 
+	
 	
 	<!-- insert 처리 -->
 	<!-- 그냥 한번에 INSERT -->
@@ -72,7 +105,12 @@
 	
 	<!-- 총 개수 -->
 	<select id="getTotalCount" resultType="int">
-		SELECT COUNT(*) FROM TBL_BOARD WHERE BNO > 0
+		SELECT COUNT(*) FROM TBL_BOARD WHERE
+		<!-- 검색 기능으로 인한 추가 쿼리문 -->
+		
+		<include refid="criteria"></include>
+		
+		bno > 0
 	</select>
 
 </mapper>

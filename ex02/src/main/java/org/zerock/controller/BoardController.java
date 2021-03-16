@@ -84,10 +84,17 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		// UriComponentsBuilder를 사용하여 간편히 
+		// 파라미터를 구성하기 때문에 아래와 같은 
+		// 번거로운 작업이 필요 없음
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list" + cri.getListLink();
 	}
 	
 	@PostMapping("/remove")
@@ -98,9 +105,13 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list" + cri.getListLink();
 	}
 }
